@@ -73,3 +73,4 @@ Base de données test : test
 * [GET] http://localhost/api/students/{id}/averages [ Retrieve on student average ]
 * [POST] http://localhost/api/students/{id}/grades [ Add new grade for student ]
 
+<img width="1342" alt="capture" src="https://raw.githubusercontent.com/mysterio85/ubitrans/7b0b0bff7b82f1d444984a1887f75d6b504aa6a5/capture.png">
