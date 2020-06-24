@@ -1,0 +1,35 @@
+App\Entity\Student:
+    student_{1..3}:
+        lastName: <name()>
+        firstName: <name()>
+        birthDate: <dateTime()>
+    student_4:
+        lastName: <name()>
+        firstName: <name()>
+        birthDate: <dateTime()>
+
+App\Entity\Grade:
+    grade_1:
+        subject: <name()>
+        mark: 20
+        student: '@student_3'
+    grade_2:
+        subject: <name()>
+        mark: 10
+        student: '@student_3'
+    grade_11:
+        subject: <name()>
+        mark: 7
+        student: '@student_4'
+    grade_12:
+        subject: <name()>
+        mark: 12
+        student: '@student_4'
+    grade_13:
+        subject: <name()>
+        mark: 11
+        student: '@student_4'
+    grade_14:
+        subject: <name()>
+        mark: 18
+        student: '@student_4'

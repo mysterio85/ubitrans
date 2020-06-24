@@ -34,8 +34,7 @@ class ApiControllerTest extends WebTestCase
         $connection->executeQuery('ALTER TABLE student AUTO_INCREMENT = 1');
 
         $this->loader->load([
-            './fixtures/student.yaml',
-            './fixtures/grade.yaml',
+            './fixtures/test.yaml'
         ]);
 
         $result = $this->doctrine->getManager()->getRepository(Student::class)->findAll();
@@ -179,6 +178,27 @@ class ApiControllerTest extends WebTestCase
 
         $this->client->request(self::GET, $endPoint);
 
+        $response = $this->client->getResponse()->getContent();
+
+        $this->assertEquals('{"average":"13"}', $response);
+
+        $this->assertResponseStatusCodeSame(200);
+
+    }
+
+    /**
+     * Test Overall Class Average error
+     */
+    public function testOverallClassAverageError()
+    {
+        $endPoint = self::URI . '/averages';
+
+        $this->client->request(self::GET, $endPoint);
+
+        $response = $this->client->getResponse()->getContent();
+
+        $this->assertNotEquals('{"average":"20"}', $response);
+
         $this->assertResponseStatusCodeSame(200);
 
     }
@@ -189,12 +209,32 @@ class ApiControllerTest extends WebTestCase
      */
     public function testStudentAverageSuccess()
     {
-        $endPoint = self::URI . '/3/averages';
+        $endPoint = self::URI . '/4/averages';
 
         $this->client->request(self::GET, $endPoint);
 
+        $response = $this->client->getResponse()->getContent();
+
+        $this->assertEquals('{"average":"12"}', $response);
+
         $this->assertResponseStatusCodeSame(200);
 
+    }
+
+    /**
+     * Test Student Average error
+     */
+    public function testStudentAverageError()
+    {
+        $endPoint = self::URI . '/1/averages';
+
+        $this->client->request(self::GET, $endPoint);
+
+        $response = $this->client->getResponse()->getContent();
+
+        $this->assertNotEquals('{"average":"12"}', $response);
+
+        $this->assertResponseStatusCodeSame(200);
 
     }
 
