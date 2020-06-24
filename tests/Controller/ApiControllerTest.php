@@ -104,7 +104,7 @@ class ApiControllerTest extends WebTestCase
 
         $this->client->request(self::PATCH, $endPoint, $data);
 
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(200);
 
     }
 

@@ -26,17 +26,26 @@ class ApiController extends AbstractController
      * This call can create a student.
      *
      * @Route("/api/students", methods={"POST"}, name="api_students_create")
-     * @OA\Response(
-     *     response=201,description="Returns request status of an user",
-     *     @OA\JsonContent(
-     *        @OA\Schema(
-     *             type="array",
-     *             @OA\Items(ref=@Model(type=Student::class, groups={"full"}))
-     *        )
+     * @OA\Post(
+     *     path="/api/students",
+     *     summary="Add a student.",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="firstName",type="string"),
+     *                 @OA\Property(property="lastName",type="string"),
+     *                 @OA\Property(property="birthDate",type="dateTime"),
+     *                 example={"firstName": "Smith", "lastName": "Jessica", "birthDate": "1985-01-01"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="OK"
      *     )
      * )
      * @OA\Tag(name="Student")
-     *
      */
     public function addStudent(Request $request): JsonResponse
     {
@@ -91,9 +100,24 @@ class ApiController extends AbstractController
      * Edit student information (last name, first name, date of birth).
      *
      * @Route("/api/students/{id}", methods={"PATCH"}, name="api_students_update")
-     * @OA\Response(
-     *     response=200,
-     *     description="Returns the status and state message"
+     * @OA\Patch(
+     *     path="/api/students/{id}",
+     *     summary="Edit a student.",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="firstName",type="string"),
+     *                 @OA\Property(property="lastName",type="string"),
+     *                 @OA\Property(property="birthDate",type="dateTime"),
+     *                 example={"firstName": "Smith", "lastName": "Jessica", "birthDate": "1985-01-01"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
      * )
      * @OA\Tag(name="Student")
      */
@@ -122,7 +146,7 @@ class ApiController extends AbstractController
             $lastName = $request->get('lastName');
             $birthDate = $request->get('birthDate');
 
-            if (!$request || ($firstName && $lastName && $birthDate)) {
+            if (!$request) {
                 throw new \Exception();
             }
 
@@ -134,10 +158,10 @@ class ApiController extends AbstractController
             $entityManager->flush();
 
             $data = [
-                'status' => Response::HTTP_CREATED,
+                'status' => Response::HTTP_OK,
                 'success' => "Student updated successfully",
             ];
-            return new JsonResponse($data, Response::HTTP_CREATED);
+            return new JsonResponse($data, Response::HTTP_OK);
 
         } catch (\Exception $e) {
 
@@ -259,14 +283,28 @@ class ApiController extends AbstractController
     }
 
     /**
-     * Edit a student.
+     * Student grade.
      *
      * Add grade of student.
      *
      * @Route("/api/students/{id}/grades", methods={"POST"}, name="api_students_grades_add")
-     * @OA\Response(
-     *     response=201,
-     *     description="Returns request status of an user"
+     * @OA\Post(
+     *     path="/api/students/{id}/grades",
+     *     summary="Add grade of student.",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="subject",type="string"),
+     *                 @OA\Property(property="mark",type="float"),
+     *                 example={"subject": "SQL", "mark": 15}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="OK"
+     *     )
      * )
      * @OA\Tag(name="Student Grade")
      */
