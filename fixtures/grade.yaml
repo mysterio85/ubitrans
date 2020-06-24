@@ -1,0 +1,5 @@
+App\Entity\Grade:
+    grade_{1..10}:
+        subject: <name()>
+        mark: <numberBetween(0,20)>
+        student: '@student_*'

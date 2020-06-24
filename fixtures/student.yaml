@@ -1,0 +1,5 @@
+App\Entity\Student:
+    student_{1..3}:
+        lastName: <name()>
+        firstName: <name()>
+        birthDate: <dateTime()>
